@@ -60,9 +60,39 @@ describe('Test du site Sauce Demo', () => {
     cy.get(".btn_primary.btn_inventory").eq(0).click()
     cy.get(".btn_primary.btn_inventory").eq(0).click()
 
-    cy.get('path').click()
+    cy.get('#shopping_cart_container').click()
 
   })
+
+  it('Checkout', () => {
+    
+    cy.get("#user-name").type("standard_user")
+    cy.get("#password").type(Password)
+    cy.get("#login-button").click()
+
+    cy.get(".btn_primary.btn_inventory").eq(0).click()
+    cy.get(".btn_primary.btn_inventory").eq(0).click()
+
+    cy.get('#shopping_cart_container').click()
+    cy.get('.btn_action.checkout_button').click()
+
+    cy.get('#first-name').type("aline")
+    cy.get('#last-name').type("SG")
+    cy.get('#postal-code').type("59000")
+
+    cy.get('.btn_primary.cart_button').click()
+
+    cy.get('.btn_action.cart_button').click()
+
+    
+    cy.get('h2.complete-header').should('be.visible')
+    //cy.screenshot()
+    cy.get('.complete-header').contains("THANK YOU FOR YOUR ORDER")
+    cy.get('.complete-text').contains("Your order has been dispatched, and will arrive just as fast as the pony can get there!")
+
+    
+  })
+
 
   
 })
