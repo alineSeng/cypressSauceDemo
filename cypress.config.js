@@ -7,6 +7,11 @@ module.exports = defineConfig({
     },
     baseUrl : "https://www.saucedemo.com/v1/",
     defaultCommandTimeout : 16000,
+    specPattern: [
+      "cypress/e2e/**/*.spec.js",
+      "cypress/e2e/**/*.cy.js",
+      "cypress/e2e/**/*.js",
+    ]
   },
   
 });

@@ -1,7 +1,14 @@
 const { beforeEach } = require("mocha")
 
-let Username = "locked_out_user"
+let Faux_username = "locked_out_user"
+let Username = "standard_user"
 let Password = "secret_sauce"
+
+const login = (username = Username, password = Password) => {
+  cy.get("#user-name").type(username)
+  cy.get("#password").type(password)
+  cy.get("#login-button").click()
+}
 
 describe('Test du site Sauce Demo', () => {
   beforeEach(() => {
@@ -10,26 +17,20 @@ describe('Test du site Sauce Demo', () => {
   })
 
   it('Se connecter avec un mauvais id : locket out user', () => {
-    cy.get("#user-name").type(Username)
-    cy.get("#password").type(Password)
-    cy.get("#login-button").click()
+    login(Faux_username, Password)
 
     cy.get('[data-test="error"]', { timeout: 20000 }).should('be.visible');
   })
 
   it('Se connecter normalement', () => {
     
-    cy.get("#user-name").type("standard_user")
-    cy.get("#password").type(Password)
-    cy.get("#login-button").click()
+    login(Username, Password)
 
   })
 
   it('Tri les articles du plus cher au moins cher', () => {
     
-    cy.get("#user-name").type("standard_user")
-    cy.get("#password").type(Password)
-    cy.get("#login-button").click()
+    login(Username, Password)
 
     //cy.get('.product_label').click()
     cy.get('select[class="product_sort_container"]').select('hilo');
@@ -42,9 +43,7 @@ describe('Test du site Sauce Demo', () => {
 
   it('Sélectionner les 2 plus cher', () => {
     
-    cy.get("#user-name").type("standard_user")
-    cy.get("#password").type(Password)
-    cy.get("#login-button").click()
+    login(Username, Password)
 
     cy.get(".btn_primary.btn_inventory").eq(0).click()
     cy.get(".btn_primary.btn_inventory").eq(0).click()
@@ -53,9 +52,7 @@ describe('Test du site Sauce Demo', () => {
 
   it('Aller sur le panier', () => {
     
-    cy.get("#user-name").type("standard_user")
-    cy.get("#password").type(Password)
-    cy.get("#login-button").click()
+    login(Username, Password)
 
     cy.get(".btn_primary.btn_inventory").eq(0).click()
     cy.get(".btn_primary.btn_inventory").eq(0).click()
@@ -66,9 +63,7 @@ describe('Test du site Sauce Demo', () => {
 
   it('Checkout', () => {
     
-    cy.get("#user-name").type("standard_user")
-    cy.get("#password").type(Password)
-    cy.get("#login-button").click()
+    login(Username, Password)
 
     cy.get(".btn_primary.btn_inventory").eq(0).click()
     cy.get(".btn_primary.btn_inventory").eq(0).click()
