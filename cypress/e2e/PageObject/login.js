@@ -20,6 +20,7 @@ class Login{
     submit(){
         cy.get("#login-button").click()
     }
+    
     submit_error(){
         cy.get("#login-button").click()
         cy.get('[data-test="error"]', { timeout: 20000 }).should('be.visible');

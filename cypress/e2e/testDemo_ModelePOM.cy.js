@@ -3,50 +3,50 @@ import Inventory from "./PageObject/inventory";
 import Checkout from "./PageObject/checkout";
 
 
-describe('Cypress POM test', function() {
+function login_as({username, password}){
+    const loginpage = new Login();
+        
+    //loginpage.navigate();
+    loginpage.email(username);
+    loginpage.password(password);
+    loginpage.submit();
+}
 
+describe('Cypress POM test', function() {
+    const loginpage = new Login();
+    const inventorypage = new Inventory();
+    const checkoutpage = new Checkout();
+
+    beforeEach(() => {
+        loginpage.navigate()
+    })
+        
     it('Login Fail', () => {
-        
-        const loginpage = new Login();
-        
-        loginpage.navigate();
-        loginpage.email('locked_out_user');
-        loginpage.password('secret_sauce');
+
+        // loginpage.navigate();
+        // loginpage.email('locked_out_user');
+        // loginpage.password('secret_sauce');
+        // loginpage.submit_error();
+        login_as({ username: 'locked_out_user', password: 'secret_sauce' });
         loginpage.submit_error();
+
     })
 
     it('Login Pass', () => {
         
-        const loginpage = new Login();
-        
-        loginpage.navigate();
-        loginpage.email('standard_user');
-        loginpage.password('secret_sauce');
-        loginpage.submit();
+        login_as({ username: 'standard_user', password: 'secret_sauce' });
         cy.url().should('be.equal', 'https://www.saucedemo.com/v1/inventory.html')
     })
 
     it('Tri articles du plus cher au moins cher', () => {
-        const loginpage = new Login();
-        const inventorypage = new Inventory();
-
-        loginpage.navigate();
-        loginpage.email('standard_user');
-        loginpage.password('secret_sauce');
-        loginpage.submit();
+        login_as({ username: 'standard_user', password: 'secret_sauce' });
 
         inventorypage.sort_from_most_expensive_to_least_expensive();
     
     })
 
     it('Selection 2 articles les plus cher', () => {
-        const loginpage = new Login();
-        const inventorypage = new Inventory();
-
-        loginpage.navigate();
-        loginpage.email('standard_user');
-        loginpage.password('secret_sauce');
-        loginpage.submit();
+        login_as({ username: 'standard_user', password: 'secret_sauce' });
 
         inventorypage.sort_from_most_expensive_to_least_expensive();
         
@@ -54,13 +54,7 @@ describe('Cypress POM test', function() {
     })
     
     it('Aller sur le panier', () => {
-        const loginpage = new Login();
-        const inventorypage = new Inventory();
-
-        loginpage.navigate();
-        loginpage.email('standard_user');
-        loginpage.password('secret_sauce');
-        loginpage.submit();
+        login_as({ username: 'standard_user', password: 'secret_sauce' });
 
         inventorypage.sort_from_most_expensive_to_least_expensive();
         
@@ -69,14 +63,9 @@ describe('Cypress POM test', function() {
     })
 
     it('Checkout', () => {
-        const loginpage = new Login();
-        const inventorypage = new Inventory();
-        const checkoutpage = new Checkout();
-
-        loginpage.navigate();
-        loginpage.email('standard_user');
-        loginpage.password('secret_sauce');
-        loginpage.submit();
+        login_as({ username: 'standard_user', password: 'secret_sauce' });
+        
+        cy.url().should('be.equal', 'https://www.saucedemo.com/v1/inventory.html')
 
         //inventory page 
         inventorypage.sort_from_most_expensive_to_least_expensive();
