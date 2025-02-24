@@ -1,5 +1,6 @@
 import Login from "./PageObject/login";
 import Inventory from "./PageObject/inventory";
+import Checkout from "./PageObject/checkout";
 
 
 describe('Cypress POM test', function() {
@@ -70,20 +71,35 @@ describe('Cypress POM test', function() {
     it('Checkout', () => {
         const loginpage = new Login();
         const inventorypage = new Inventory();
+        const checkoutpage = new Checkout();
 
         loginpage.navigate();
         loginpage.email('standard_user');
         loginpage.password('secret_sauce');
         loginpage.submit();
 
+        //inventory page 
         inventorypage.sort_from_most_expensive_to_least_expensive();
         
         inventorypage.add_2_most_expensive_items_to_cart()
         inventorypage.go_to_cart()
 
         inventorypage.checkout_click()
+
+        //checkout information form
+        checkoutpage.first_name('Aline')
+        checkoutpage.last_name('SG')
+        checkoutpage.postal_code('59000')  
+        checkoutpage.continue_button()
+
+        checkoutpage.finish()
+
+        // finish page
+        checkoutpage.check_finish_message()
     
     })
+
+    
 
 })
 
