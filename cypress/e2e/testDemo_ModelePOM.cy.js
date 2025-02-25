@@ -92,9 +92,9 @@ describe('Cypress POM test', function() {
         inventorypage.checkout_click()
 
         //checkout information form
-        checkoutpage.first_name('Aline')
-        checkoutpage.last_name('SG')
-        checkoutpage.postal_code('59000')  
+        checkoutpage.first_name(this.data.first_name)
+        checkoutpage.last_name(this.data.last_name)
+        checkoutpage.postal_code(this.data.postal_code)  
         checkoutpage.continue_button()
 
         checkoutpage.finish()
